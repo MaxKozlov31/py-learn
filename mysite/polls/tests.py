@@ -4,7 +4,7 @@ from django.test import TestCase
 from django.urls.base import reverse
 from django.utils import timezone
 
-from .models import Question
+from .models import Question, Choice
 
 
 class QuestionModelTests(TestCase):
@@ -93,6 +93,16 @@ class QuestionIndexViewTests(TestCase):
             response.context['latest_question_list'],
             [question2, question1],
         )
+
+    # def test_empty_question(self):
+    #     """
+    #     The empty question should not be publishedю
+    #     """
+    #     create_question(question_text="Empty question", days=-1)
+    #     response = self.client.get(reverse('polls:index'))
+    #     # self.assertContains(response, "No polls are available.")
+    #     self.assertQuerysetEqual(response.context['latest_question_list'], [])
+        
 
 class QuestionDetailViewTests(TestCase):
     def test_future_question(self):

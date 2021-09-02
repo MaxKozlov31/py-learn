@@ -1,3 +1,4 @@
+from datetime import datetime, timedelta
 from django.db.models.query_utils import Q
 from django.shortcuts import render, get_object_or_404
 from django.http import Http404, HttpResponseRedirect
@@ -10,14 +11,23 @@ from .models import Choice, Question
 class IndexView(generic.ListView):
     template_name = 'polls/index.html'
     context_object_name = 'latest_question_list'
-    
+
     def get_queryset(self):
+        # ques_mas = []
+        # q = Question.objects.all()
+        # for i in q:
+        #     if i.choice_set.count() != 0:
+        #         ques_mas.append(i)
+        #         # print('[*] FILLED QUESTION:', i)
+        
+        # return filter(lambda x : x.pub_date <= timezone.now(), ques_mas)
+
         return Question.objects.filter(pub_date__lte = timezone.now()).order_by('-pub_date')[:5]
 
 class DetailView(generic.DetailView):
     model = Question
     template_name = 'polls/detail.html'
-
+    
     def get_queryset(self):
         return Question.objects.filter(pub_date__lte=timezone.now())
 
